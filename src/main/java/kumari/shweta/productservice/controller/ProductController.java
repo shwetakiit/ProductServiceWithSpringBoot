@@ -2,10 +2,7 @@ package kumari.shweta.productservice.controller;
 
 import kumari.shweta.productservice.model.Product;
 import kumari.shweta.productservice.service.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +30,27 @@ public class ProductController {
     //localhost://8080/products
     @GetMapping
     public List<Product> getAllProducts(){
-     return new ArrayList<>();
+     return productService.getAllProducts();
     }
     //createPRODUCT
     //deleteProduct
     //updateProduct --Partial Update(PATCH)
     //replaceProduct--> Replace
 
+/*
+
+    {
+
+        "title":"update fake API ",
+            " description":"shweta",
+            " image":"https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg"
+    }
+
+
+    */
+
+    @PutMapping("/{id}")
+    public Product replaceProduct(@PathVariable("id") Long id, @RequestBody Product product) {
+        return productService.replaceProduct(id, product);
+    }
 }
