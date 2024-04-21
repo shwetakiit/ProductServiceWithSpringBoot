@@ -2,6 +2,9 @@ package kumari.shweta.productservice.controller;
 
 import kumari.shweta.productservice.model.Product;
 import kumari.shweta.productservice.service.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,8 +26,15 @@ public class ProductController {
 
     //localhost://8080/products/1
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
-        return productService.getProductByID(id);
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        Product product = productService.getProductByID(id);
+        ResponseEntity<Product>  responseEntity;
+        if(product==null){
+            responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return  responseEntity;
+        }
+       responseEntity= new ResponseEntity<>(product,HttpStatus.OK);
+        return  responseEntity;
     }
 
     //localhost://8080/products
