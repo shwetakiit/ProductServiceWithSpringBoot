@@ -51,7 +51,7 @@ public class FakeStoreProductService implements ProductService {
         product.setDescription(fakeStoreProductDTO.getDescription());
         product.setImage(fakeStoreProductDTO.getImage());
         Category category = new Category();
-        category.setDesc(fakeStoreProductDTO.getCategory());
+        category.setTitle(fakeStoreProductDTO.getCategory());
         product.setCategory(category);
         return product;
     }
