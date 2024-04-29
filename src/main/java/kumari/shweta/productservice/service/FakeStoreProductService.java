@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service  //This service annotation we create object of FakeStoreProductService at  the time of intialization
+@Service ("fakeProductService") //This service annotation we create object of FakeStoreProductService at  the time of intialization
 public class FakeStoreProductService implements ProductService {
     RestTemplate restTemplate;
 
@@ -31,6 +31,21 @@ public class FakeStoreProductService implements ProductService {
         HttpMessageConverterExtractor<FakeStoreProductDTO> responseExtractor = new HttpMessageConverterExtractor<>(FakeStoreProductDTO.class, restTemplate.getMessageConverters());
         FakeStoreProductDTO response = restTemplate.execute("https://fakestoreapi.com/products/" + id, HttpMethod.PUT, requestCallback, responseExtractor);
         return convertFakeStoreDTOtoProduct(response);
+    }
+
+    @Override
+    public Product updateProduct(Long id, Product product) {
+        return null;
+    }
+
+    @Override
+    public Product createProduct(Product product) {
+        return null;
+    }
+
+    @Override
+    public void deleteProduct() {
+
     }
 
     FakeStoreProductService(RestTemplate restTemplate) {

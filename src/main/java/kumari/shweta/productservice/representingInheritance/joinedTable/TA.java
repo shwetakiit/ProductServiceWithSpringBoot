@@ -1,7 +1,7 @@
 package kumari.shweta.productservice.representingInheritance.joinedTable;
 
 import jakarta.persistence.Entity;
-import kumari.shweta.productservice.representingInheritance.mappedsuperclass.User;
+
 import lombok.Getter;
 import lombok.Setter;
 

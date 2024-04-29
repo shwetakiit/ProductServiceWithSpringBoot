@@ -2,7 +2,7 @@ package kumari.shweta.productservice.representingInheritance.joinedTable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
-import kumari.shweta.productservice.representingInheritance.mappedsuperclass.User;
+
 import lombok.Getter;
 import lombok.Setter;
 

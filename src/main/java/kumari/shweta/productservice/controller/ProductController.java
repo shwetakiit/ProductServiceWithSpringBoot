@@ -1,13 +1,12 @@
 package kumari.shweta.productservice.controller;
 
 import kumari.shweta.productservice.model.Product;
+import kumari.shweta.productservice.repositories.ProductRepository;
 import kumari.shweta.productservice.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 //localhost://8080/products
@@ -15,13 +14,15 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
+    private final ProductRepository productRepository;
     private ProductService productService;
 
     /*If we don't annotate Service class @Service It will show error here due to Spring required object to pass
     Sprint will not create object automatically we need to tell to sprint to create object at the time of intilization
     so we need to annotate service class with @Service*/
-    ProductController(ProductService productService) {
+    ProductController(@Qualifier("selfProductService") ProductService productService, ProductRepository productRepository) {
         this.productService=productService;
+        this.productRepository = productRepository;
     }
 
     //localhost://8080/products/1
@@ -62,5 +63,14 @@ public class ProductController {
     @PutMapping("/{id}")
     public Product replaceProduct(@PathVariable("id") Long id, @RequestBody Product product) {
         return productService.replaceProduct(id, product);
+    }
+
+    @PostMapping
+    public Product createProduct(@RequestBody  Product product){//Here we can use DTO as well.
+        return productService.createProduct(product);
+    }
+
+    public void deleteProduct() {
+
     }
 }
