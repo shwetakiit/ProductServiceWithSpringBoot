@@ -53,7 +53,6 @@ public class SelfProductService implements  ProductService{
 
         } else {
             //We should check if the category id is valid or not .
-
         }
 
       Product savedProduct=  productRepository.save(product);
