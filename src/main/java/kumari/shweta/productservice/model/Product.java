@@ -14,7 +14,8 @@ public class Product extends  BaseModel {
     private String description;
     private double price;
     private String image;
-    @ManyToOne
+    private int qty;
+    @ManyToOne(cascade = CascadeType.PERSIST) //Note If we post the request of product with same category id which available in DB we will get error  detached entity passed to persist: kumari.shweta.productservice.model.Category .To avoid this error use Casecadetype -->MERGE or ALL better to use Merge
     private Category category;
 
     /*

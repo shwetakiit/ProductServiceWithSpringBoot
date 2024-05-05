@@ -46,7 +46,15 @@ public class SelfProductService implements  ProductService{
     public Product createProduct(Product product) {
         //Before saving the product Object in DB ,Save the Category object .
         Category category= product.getCategory();
-        if(category.getId()==null){
+
+        /*
+        If we save product we need to save category first otherwise get technical error.Object references an
+        unsaved transient instance - save the transient instance before flushing : kumari.shweta.productservice.model.Product.category ->
+
+        We have another option to avoid to writting separate code to save category first to save the product
+        by using CasecadeType
+
+          if(category.getId()==null){
             //We need to save category
            Category savedCategory= categoryRepository.save(category);
            product.setCategory(savedCategory);
@@ -54,8 +62,9 @@ public class SelfProductService implements  ProductService{
         } else {
             //We should check if the category id is valid or not .
         }
+        */
 
-      Product savedProduct=  productRepository.save(product);
+        Product savedProduct=  productRepository.save(product);
         Optional<Category> optionalCategory = categoryRepository.findById(savedProduct.getCategory().getId());
         Category category1 = optionalCategory.get();
         savedProduct.setCategory(category1);
