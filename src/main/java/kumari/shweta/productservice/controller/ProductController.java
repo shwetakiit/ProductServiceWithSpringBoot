@@ -29,6 +29,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Product product = productService.getProductByID(id);
+    //    product = new Product(); --Test testcase fail scenario because we are creating different object of product
         ResponseEntity<Product>  responseEntity;
         if(product==null){
             responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -41,6 +42,11 @@ public class ProductController {
     //localhost://8080/products
     @GetMapping
     public List<Product> getAllProducts(){
+   /*
+   To fail test case create objects which is different from mock object
+    List<Product> products = List.of(new Product(),new Product(),new Product(),new Product());
+    return  products;
+    */
      return productService.getAllProducts();
     }
     //createPRODUCT
