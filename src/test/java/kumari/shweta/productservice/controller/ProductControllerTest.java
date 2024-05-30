@@ -30,12 +30,21 @@ class ProductControllerTest {
         Product product = new Product();
         product.setTitle("Macbook Pro");
         product.setPrice(150000.0);
+        String token="";
         when(productService.getProductByID(1L)).thenReturn(product);//If you are calling product with id 1L ,It will call mock product
 
-        ResponseEntity<Product> responseEntity = productController.getProductById(1L);
+        ResponseEntity<Product> responseEntity = productController.getProductById(1L,token);
         Product actualProduct = responseEntity.getBody();
         assertEquals(product,actualProduct);
 
+    }
+
+    @Test
+    void validGetProductByIdTestWithUserAuthentication()  {
+        Product product = new Product();
+        product.setTitle("Macbook Pro");
+        product.setPrice(150000.0);
+        when(productService.getProductByID(1L)).thenReturn(product);//If you are calling product with id 1L ,It will call mock product
     }
     @Test
     void getAllProductsTest()  {

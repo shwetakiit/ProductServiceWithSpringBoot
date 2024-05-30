@@ -1,5 +1,8 @@
 package kumari.shweta.productservice.controller;
 
+import kumari.shweta.productservice.commons.AuthCommons;
+import kumari.shweta.productservice.dto.Role;
+import kumari.shweta.productservice.dto.UserDTO;
 import kumari.shweta.productservice.model.Product;
 import kumari.shweta.productservice.repositories.ProductRepository;
 import kumari.shweta.productservice.service.ProductService;
@@ -16,21 +19,42 @@ public class ProductController {
 
     private final ProductRepository productRepository;
     private ProductService productService;
+    private AuthCommons authCommons;
 
     /*If we don't annotate Service class @Service It will show error here due to Spring required object to pass
     Sprint will not create object automatically we need to tell to sprint to create object at the time of intilization
     so we need to annotate service class with @Service*/
-    ProductController(@Qualifier("selfProductService") ProductService productService, ProductRepository productRepository) {
+    ProductController(@Qualifier("selfProductService") ProductService productService, ProductRepository productRepository,AuthCommons authCommons) {
         this.productService=productService;
         this.productRepository = productRepository;
+        this.authCommons=authCommons;
+
     }
 
     //localhost://8080/products/1
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<Product> getProductById(@PathVariable Long id,@RequestHeader("authToken") String token) {
+
+
+        //Call UserService ValidateToken API to validate the token
+        UserDTO userDTO= authCommons.validateToken(token);
+        ResponseEntity<Product> responseEntity;
+        if(userDTO==null){
+            responseEntity= new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
+            return  responseEntity;
+
+        }
+        //Role based access -Lets say If user has admin role that user can access product
+      /*  for(Role role: userDTO.getRoles()){
+            if(role.getValue().equals("ADMIN")){
+             //Provide access
+            }
+        }*/
+
         Product product = productService.getProductByID(id);
-    //    product = new Product(); --Test testcase fail scenario because we are creating different object of product
-        ResponseEntity<Product>  responseEntity;
+
+        //    product = new Product(); --Test testcase fail scenario because we are creating different object of product
+
         if(product==null){
             responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             return  responseEntity;
